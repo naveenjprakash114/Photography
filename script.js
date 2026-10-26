@@ -89,7 +89,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   navLinks.forEach(link => {
-    link.addEventListener('click', closeMobileMenu);
+    if (link.classList.contains('nav-dropdown-trigger')) {
+      link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+          const parent = link.closest('.nav-has-dropdown');
+          if (parent) {
+            parent.classList.toggle('is-open');
+          }
+        }
+      });
+    } else {
+      link.addEventListener('click', closeMobileMenu);
+    }
   });
 
   /* ==========================================================================
@@ -208,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const glare = logoCard.querySelector('.logo-3d-glare');
 
       stage.addEventListener('mousemove', (e) => {
+        if (logoCard.classList.contains('camera-shutter-snap')) return;
         const rect = logoCard.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
@@ -228,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       stage.addEventListener('mouseleave', () => {
+        if (logoCard.classList.contains('camera-shutter-snap')) return;
         logoCard.style.animation = 'logo3dFloating 5s ease-in-out infinite';
         logoCard.style.transform = '';
         if (glare) {
@@ -236,6 +250,221 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  /* ==========================================================================
+     5.2 INTERACTIVE 3D CAMERA LOGO: CLICK A PHOTO ANIMATION & SHUTTER AUDIO
+     ========================================================================== */
+  function initCameraClickPhotoAnimation() {
+    const brandLogos = document.querySelectorAll('.brand-logo, .footer-logo, [data-logo-3d]');
+    if (!brandLogos.length) return;
+
+    // Curated showcase photos to eject from the camera when snapped
+    const samplePhotos = [
+      'images/portfolio/royal-indian-wedding-ceremony.jpg',
+      'images/portfolio/outdoor-bridal-fashion.webp',
+      'images/portfolio/candid-wedding-reception-laughter.jpg',
+      'images/portfolio/studio-model-editorial.webp',
+      'images/portfolio/np-wedding-couple-portrait.webp',
+      'images/portfolio/vip-awards-reception.jpg'
+    ];
+    let photoIndex = 0;
+    let clickCount = 0;
+    let isClicking = false;
+
+    // Synthesize authentic two-stage mechanical DSLR camera shutter sound via Web Audio API
+    let audioCtx = null;
+    function playCameraShutterSound() {
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!audioCtx) {
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const now = audioCtx.currentTime;
+
+        // 1. Shutter Mirror Up Mechanical Click
+        const osc1 = audioCtx.createOscillator();
+        const gain1 = audioCtx.createGain();
+        osc1.type = 'triangle';
+        osc1.frequency.setValueAtTime(1400, now);
+        osc1.frequency.exponentialRampToValueAtTime(180, now + 0.035);
+        gain1.gain.setValueAtTime(0.45, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc1.connect(gain1);
+        gain1.connect(audioCtx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.045);
+
+        // 2. High-speed Mechanical Noise Transient (Curtain Snap)
+        const bufferSize = Math.floor(audioCtx.sampleRate * 0.05);
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioCtx.sampleRate * 0.015));
+        }
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 2800;
+        filter.Q.value = 3;
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.setValueAtTime(0.65, now + 0.01);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
+        whiteNoise.connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(audioCtx.destination);
+        whiteNoise.start(now + 0.01);
+
+        // 3. Shutter Curtain Close & Latch (Second Crisp Click)
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.type = 'square';
+        osc2.frequency.setValueAtTime(850, now + 0.05);
+        osc2.frequency.exponentialRampToValueAtTime(120, now + 0.09);
+        gain2.gain.setValueAtTime(0.35, now + 0.05);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        osc2.start(now + 0.05);
+        osc2.stop(now + 0.11);
+
+        // 4. Subtle Motorized Digital Write / Film Advance Whir
+        const osc3 = audioCtx.createOscillator();
+        const gain3 = audioCtx.createGain();
+        osc3.type = 'sine';
+        osc3.frequency.setValueAtTime(420, now + 0.08);
+        osc3.frequency.linearRampToValueAtTime(680, now + 0.18);
+        osc3.frequency.exponentialRampToValueAtTime(200, now + 0.24);
+        gain3.gain.setValueAtTime(0.08, now + 0.08);
+        gain3.gain.linearRampToValueAtTime(0.14, now + 0.15);
+        gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc3.connect(gain3);
+        gain3.connect(audioCtx.destination);
+        osc3.start(now + 0.08);
+        osc3.stop(now + 0.26);
+      } catch (err) {
+        // Audio synthesis fallback silently if permission/policy restricted
+      }
+    }
+
+    let lastSnapTime = 0;
+
+    // Trigger photo snap animation on the logo element
+    function triggerCameraPhotoClick(logoContainer) {
+      const now = Date.now();
+      // Smooth debounce: 650ms cooldown between photo snaps
+      if (now - lastSnapTime < 650) return;
+      lastSnapTime = now;
+
+      const logoCard = logoContainer.querySelector('[data-logo-3d]') || logoContainer.querySelector('.logo-3d-card') || logoContainer;
+      const rect = logoCard.getBoundingClientRect();
+      const lensCenterX = rect.left + rect.width / 2;
+      const lensCenterY = rect.top + rect.height * 0.42;
+
+      clickCount++;
+
+      // 1. Play realistic mechanical camera shutter sound
+      playCameraShutterSound();
+
+      // 2. Trigger 3D Shutter Snap Recoil on Logo Card
+      logoCard.classList.remove('camera-shutter-snap');
+      void logoCard.offsetWidth; // Force reflow
+      logoCard.classList.add('camera-shutter-snap');
+      setTimeout(() => {
+        logoCard.classList.remove('camera-shutter-snap');
+      }, 550);
+
+      // 3. Strobe / Flash Burst from the Camera Lens
+      let flashOverlay = document.getElementById('camera-flash-strobe');
+      if (!flashOverlay) {
+        flashOverlay = document.createElement('div');
+        flashOverlay.id = 'camera-flash-strobe';
+        flashOverlay.className = 'camera-flash-strobe';
+        document.body.appendChild(flashOverlay);
+      }
+      flashOverlay.style.setProperty('--flash-x', `${lensCenterX}px`);
+      flashOverlay.style.setProperty('--flash-y', `${lensCenterY}px`);
+      flashOverlay.classList.remove('flash-active');
+      void flashOverlay.offsetWidth;
+      flashOverlay.classList.add('flash-active');
+
+      // 4. Concentric Shockwave Optical Flare
+      const shockwave = document.createElement('div');
+      shockwave.className = 'camera-lens-shockwave';
+      shockwave.style.left = `${lensCenterX}px`;
+      shockwave.style.top = `${lensCenterY}px`;
+      shockwave.style.width = `${Math.max(rect.width * 0.8, 60)}px`;
+      shockwave.style.height = `${Math.max(rect.width * 0.8, 60)}px`;
+      document.body.appendChild(shockwave);
+      setTimeout(() => shockwave.remove(), 700);
+
+      // 5. Instant Photo Ejection in 3D
+      const photoCard = document.createElement('div');
+      photoCard.className = 'camera-instant-photo';
+      photoCard.style.left = `${lensCenterX}px`;
+      photoCard.style.top = `${lensCenterY}px`;
+      
+      const randomRot = (Math.random() * 16 - 8).toFixed(1);
+      const isMobile = window.innerWidth <= 767;
+      const driftY = isMobile ? 85 : 125;
+      photoCard.style.setProperty('--photo-rot', `${randomRot}deg`);
+      photoCard.style.setProperty('--photo-drift-y', `${driftY}px`);
+
+      const photoSrc = samplePhotos[photoIndex % samplePhotos.length];
+      photoIndex++;
+
+      photoCard.innerHTML = `
+        <img src="${photoSrc}" alt="Captured Photo" class="camera-instant-photo-img">
+        <div class="camera-instant-photo-badge">
+          <span>PHOTO #${clickCount}</span>
+        </div>
+      `;
+      document.body.appendChild(photoCard);
+      setTimeout(() => photoCard.remove(), 1600);
+    }
+
+    // Attach to brand logo links & stages
+    brandLogos.forEach(logoElem => {
+      if (logoElem.dataset.cameraBound) return;
+      logoElem.dataset.cameraBound = 'true';
+      logoElem.style.cursor = 'pointer';
+      logoElem.setAttribute('title', 'Touch with cursor to snap a photo! 📸');
+
+      // 1. TOUCH WITH CURSOR (hover / mouseenter / pointerenter) -> SNAP PHOTO!
+      logoElem.addEventListener('mouseenter', () => {
+        triggerCameraPhotoClick(logoElem);
+      });
+
+      // 2. TOUCH ON MOBILE / TABLET (touchstart / pointerdown) -> SNAP PHOTO!
+      logoElem.addEventListener('touchstart', (e) => {
+        triggerCameraPhotoClick(logoElem);
+      }, { passive: true });
+
+      // 3. CLICK ON LOGO -> SNAP PHOTO (with smooth scroll if home anchor)
+      logoElem.addEventListener('click', (e) => {
+        const anchor = logoElem.closest('a');
+        if (anchor) {
+          const href = anchor.getAttribute('href');
+          if (href && (href.startsWith('#') || href === 'index.html#home' || href.endsWith('index.html'))) {
+            e.preventDefault();
+            triggerCameraPhotoClick(logoElem);
+            if (href === '#home' || href === 'index.html#home') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            return;
+          }
+        }
+        triggerCameraPhotoClick(logoElem);
+      });
+    });
+  }
+
+  initCameraClickPhotoAnimation();
 
   /* ==========================================================================
      5B. INTERACTIVE SERVICE BAR & 3D POP-UP MENU ENGINE
@@ -594,8 +823,60 @@ document.addEventListener('DOMContentLoaded', () => {
   if (bookingForm) {
     bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
+
+      const name = document.getElementById('client-name')?.value.trim() || 'Client';
+      const phone = document.getElementById('client-phone')?.value.trim() || '+91 73971 72114';
+      const email = document.getElementById('client-email')?.value.trim() || '';
+      const service = document.getElementById('service-select')?.value || 'Photography';
+      const date = document.getElementById('booking-date')?.value || new Date().toISOString().split('T')[0];
+      const notes = document.getElementById('booking-notes')?.value.trim() || 'Booked via website popup inquiry';
+
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      const bookingId = `ELD-2026-${randomNum}`;
+
+      const newBooking = {
+        id: bookingId,
+        eventType: service,
+        eventTitle: `${service} Session`,
+        date: date,
+        timeSlot: 'Full Day / Standard',
+        venue: 'Client Venue / Studio',
+        city: 'Salem, Tamil Nadu',
+        guests: 'Standard',
+        customerName: name,
+        customerPhone: phone,
+        customerEmail: email,
+        contactPref: 'WhatsApp',
+        notes: notes,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        const STORAGE_KEY = 'elDhruv_event_bookings';
+        const stored = localStorage.getItem(STORAGE_KEY);
+        const bookings = stored ? JSON.parse(stored) : [];
+        bookings.unshift(newBooking);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+      } catch (err) {
+        console.error('Failed to save to localStorage:', err);
+      }
+
       bookingForm.style.display = 'none';
-      if (bookingSuccess) bookingSuccess.style.display = 'block';
+      if (bookingSuccess) {
+        bookingSuccess.style.display = 'block';
+        const existingDashLink = document.getElementById('home-dash-link');
+        if (!existingDashLink) {
+          const dashLink = document.createElement('a');
+          dashLink.id = 'home-dash-link';
+          dashLink.href = 'booking.html#dashboard';
+          dashLink.className = 'btn btn-outline';
+          dashLink.style.display = 'inline-block';
+          dashLink.style.marginTop = '14px';
+          dashLink.textContent = '📋 View in Booking Dashboard →';
+          bookingSuccess.appendChild(dashLink);
+        }
+      }
     });
   }
 

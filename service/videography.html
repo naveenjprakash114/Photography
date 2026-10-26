@@ -7,7 +7,7 @@
   <meta name="description" content="Cinematic 4K/8K storytelling films, documentary masterpieces, and emotional motion picture capture by EL Dhruv Visuals.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Italiana&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,8 +15,14 @@
   <!-- SITE HEADER -->
   <header class="site-header" id="site-header">
     <div class="nav-container">
-      <a href="index.html" class="brand-logo" aria-label="EL Dhruv Visuals Home">
-        <img src="logo/ChatGPT%20Image%20Sep%2018,%202026,%2010_39_09%20PM.png" alt="EL Dhruv Visuals Logo" class="brand-logo-img">
+      <a href="../index.html" class="brand-logo" aria-label="EL Dhruv Visuals Home">
+        <div class="logo-3d-stage">
+          <div class="logo-3d-card" data-logo-3d>
+            <img src="logo/el-dhruv-3d-logo.png" alt="EL Dhruv Visuals Logo" class="brand-logo-img">
+            <div class="logo-3d-shimmer" aria-hidden="true"></div>
+            <div class="logo-3d-glare" aria-hidden="true"></div>
+          </div>
+        </div>
         <div>
           <div class="brand-title">EL DHRUV</div>
           <div class="brand-subtitle">Frames For A Lifetime</div>
@@ -25,7 +31,7 @@
 
       <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
         <ul class="nav-list">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
           <li class="nav-item nav-has-dropdown">
             <a href="index.html" class="nav-link nav-dropdown-trigger active" id="nav-services-trigger" aria-haspopup="true" aria-expanded="false">
               Services <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
@@ -33,7 +39,14 @@
             <div class="nav-3d-dropdown" id="nav-services-dropdown" role="menu" aria-label="Services Submenu">
               <div class="nav-dropdown-inner">
                 <a href="index.html" class="nav-dropdown-item" role="menuitem">
-                  <span class="dropdown-item-icon">✦</span>
+                  <span class="dropdown-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="14" y="3" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="14" y="14" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="3" y="14" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                    </svg>
+                  </span>
                   <div class="dropdown-item-meta">
                     <span class="dropdown-item-title">All Services</span>
                     <span class="dropdown-item-desc">Browse full portfolio collection</span>
@@ -96,14 +109,15 @@
               </div>
             </div>
           </li>
-          <li class="nav-item"><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
-          <li class="nav-item"><a href="index.html#pricing" class="nav-link">Pricing</a></li>
-          <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+          <li class="nav-item"><a href="../index.html#portfolio" class="nav-link">Portfolio</a></li>
+          <li class="nav-item"><a href="../booking.html" class="nav-link">Book Event</a></li>
+          <li class="nav-item"><a href="../index.html#services" class="nav-link">Pricing</a></li>
+          <li class="nav-item"><a href="../index.html#contact" class="nav-link">Contact</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-primary open-booking-btn" data-service="videography">BOOK A SESSION &rarr;</button>
+        <a href="../booking.html" class="btn btn-primary">BOOK EVENT &rarr;</a>
         <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -117,7 +131,7 @@
       <div class="service-hero-pattern"></div>
       <div class="container">
         <div class="hero-breadcrumbs">
-          <a href="index.html">Home</a> &nbsp;/&nbsp; <a href="index.html">Services</a> &nbsp;/&nbsp; <span>Videography</span>
+          <a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="index.html">Services</a> &nbsp;/&nbsp; <span>Videography</span>
         </div>
 
         <div class="service-hero-grid">
@@ -133,8 +147,37 @@
             </div>
           </div>
 
-          <div class="hero-image-frame">
-            <img src="images/services/cinematic-videography-service.webp" alt="Cinematic Motion Film Production">
+          <div class="hero-image-frame hero-video-frame">
+            <video 
+              id="hero-wedding-video"
+              class="hero-wedding-video" 
+              autoplay 
+              muted 
+              loop 
+              playsinline 
+              preload="auto"
+              poster="images/services/cinematic-videography-service.webp"
+              title="10-Second Cinematic Wedding Video Clip"
+            >
+              <source src="videos/Couple_during_wedding_ceremony_20260925124336.mp4" type="video/mp4">
+              <source src="videos/wedding-videography-preview.mp4#t=0,10" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-playback-badge">
+              <span class="video-rec-dot"></span>
+              <span>10s WEDDING CINEMA CLIP</span>
+            </div>
+            <button class="video-sound-toggle-btn" id="video-sound-btn" aria-label="Toggle Audio" title="Toggle Sound">
+              <svg id="sound-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <svg id="sound-icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="display: none;">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
             <div class="hero-accent-pill">
               <div class="hero-accent-number">8K RAW</div>
               <div class="hero-accent-label">Anamorphic Scope<br>Color Space Master</div>
@@ -351,17 +394,17 @@
           <h4>Navigation</h4>
           <ul class="footer-links">
             <li><a href="index.html">All Services</a></li>
-            <li><a href="index.html#portfolio">Portfolio</a></li>
-            <li><a href="index.html#pricing">Investment</a></li>
-            <li><a href="index.html#contact">Contact &amp; Studio</a></li>
+            <li><a href="../index.html#portfolio">Portfolio</a></li>
+            <li><a href="../booking.html">Book Event &amp; Schedule</a></li>
+            <li><a href="../index.html#contact">Contact &amp; Studio</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Cinema Desk</h4>
           <p style="font-size: 0.9rem; line-height: 1.8;">
-            cinema@eldhruvvisuals.com<br>
-            +91 98765 43210<br>
-            Atelier Suite 402, Signature Towers
+            eldhruvvisualsinfo@gmail.com<br>
+            +91 7397172114<br>
+            Salem, Tamil Nadu
           </p>
         </div>
       </div>
@@ -386,6 +429,10 @@
         <div class="form-group">
           <label for="modal-email">Email Address</label>
           <input type="email" id="modal-email" required placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label for="modal-phone">Phone Number</label>
+          <input type="tel" id="modal-phone" required placeholder="+91 73971 72114">
         </div>
         <div class="form-group">
           <label for="modal-service-select">Select Service</label>

@@ -7,7 +7,7 @@
   <meta name="description" content="Explore the comprehensive luxury services portfolio of EL Dhruv Visuals. Studio Photography, Videography, Candid, Model, Private Events, and Marriage Celebrations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Italiana&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     .services-catalog-grid {
@@ -17,49 +17,67 @@
       margin-top: 40px;
     }
     .catalog-card {
-      background: #FFFFFF;
-      border: 1.5px solid var(--border-beige);
+      background: #140C0E;
+      border: 1.5px solid rgba(212, 180, 131, 0.3);
       border-radius: 24px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: var(--shadow-3d-card);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 17, 27, 0.35);
       transition: all var(--transition-smooth);
       position: relative;
     }
     .catalog-card:hover {
       transform: translateY(-8px);
-      box-shadow: var(--shadow-3d-hover);
-      border-color: var(--champagne-gold);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(142, 31, 45, 0.5);
+      border-color: #D4B483;
     }
     .catalog-card-image {
       position: relative;
-      height: 280px;
+      aspect-ratio: 16 / 11;
+      min-height: 320px;
+      max-height: 420px;
       overflow: hidden;
+      background: #080808;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .catalog-card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center 18%;
+      display: block;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .catalog-card:hover .catalog-card-image img {
+    .catalog-card-image video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .catalog-card:hover .catalog-card-image img,
+    .catalog-card:hover .catalog-card-image video {
       transform: scale(1.06);
     }
     .catalog-card-badge {
       position: absolute;
       top: 18px;
       left: 18px;
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(8, 8, 8, 0.88);
       backdrop-filter: blur(10px);
       padding: 6px 14px;
       border-radius: 9999px;
       font-size: 0.72rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--champagne-gold);
-      border: 1px solid var(--champagne-gold);
+      color: #F2EDE4;
+      border: 1px solid #D4B483;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
     }
     .catalog-card-body {
       padding: 32px 28px;
@@ -67,17 +85,19 @@
       flex-direction: column;
       flex-grow: 1;
       justify-content: space-between;
+      background: #140C0E;
     }
     .catalog-card-title {
       font-family: var(--font-serif);
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 700;
-      color: var(--text-dark);
+      color: #F2EDE4;
       margin-bottom: 10px;
+      letter-spacing: 0.02em;
     }
     .catalog-card-desc {
       font-size: 0.95rem;
-      color: var(--text-cocoa);
+      color: #C8BFB2;
       line-height: 1.65;
       margin-bottom: 24px;
     }
@@ -85,7 +105,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 1px solid var(--border-beige);
+      border-top: 1.5px solid rgba(212, 180, 131, 0.25);
       padding-top: 20px;
     }
     .catalog-card-link {
@@ -96,16 +116,20 @@
       font-size: 0.85rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--champagne-gold);
+      color: #D4B483;
       transition: gap var(--transition-fast), color var(--transition-fast);
     }
     .catalog-card-link:hover {
-      color: var(--bronze-gold);
+      color: #FFFFFF;
       gap: 12px;
+      text-shadow: 0 0 10px rgba(212, 180, 131, 0.6);
     }
     @media (max-width: 900px) {
       .services-catalog-grid {
         grid-template-columns: 1fr;
+      }
+      .catalog-card-image {
+        height: 320px;
       }
     }
   </style>
@@ -115,8 +139,14 @@
   <!-- SITE HEADER -->
   <header class="site-header" id="site-header">
     <div class="nav-container">
-      <a href="index.html" class="brand-logo" aria-label="EL Dhruv Visuals Home">
-        <img src="logo/ChatGPT%20Image%20Sep%2018,%202026,%2010_39_09%20PM.png" alt="EL Dhruv Visuals Logo" class="brand-logo-img">
+      <a href="../index.html" class="brand-logo" aria-label="EL Dhruv Visuals Home">
+        <div class="logo-3d-stage">
+          <div class="logo-3d-card" data-logo-3d>
+            <img src="logo/el-dhruv-3d-logo.png" alt="EL Dhruv Visuals Logo" class="brand-logo-img">
+            <div class="logo-3d-shimmer" aria-hidden="true"></div>
+            <div class="logo-3d-glare" aria-hidden="true"></div>
+          </div>
+        </div>
         <div>
           <div class="brand-title">EL DHRUV</div>
           <div class="brand-subtitle">Frames For A Lifetime</div>
@@ -125,7 +155,7 @@
 
       <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
         <ul class="nav-list">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
           <li class="nav-item nav-has-dropdown">
             <a href="index.html" class="nav-link nav-dropdown-trigger active" id="nav-services-trigger" aria-haspopup="true" aria-expanded="false">
               Services <span class="nav-dropdown-arrow" aria-hidden="true">&#9662;</span>
@@ -133,7 +163,14 @@
             <div class="nav-3d-dropdown" id="nav-services-dropdown" role="menu" aria-label="Services Submenu">
               <div class="nav-dropdown-inner">
                 <a href="index.html" class="nav-dropdown-item current" role="menuitem">
-                  <span class="dropdown-item-icon">✦</span>
+                  <span class="dropdown-item-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="14" y="3" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="14" y="14" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                      <rect x="3" y="14" width="7" height="7" rx="1.5" fill="rgba(212, 180, 131, 0.2)"></rect>
+                    </svg>
+                  </span>
                   <div class="dropdown-item-meta">
                     <span class="dropdown-item-title">All Services</span>
                     <span class="dropdown-item-desc">Browse full portfolio collection</span>
@@ -197,12 +234,13 @@
             </div>
           </li>
           <li class="nav-item"><a href="#catalog" class="nav-link">Portfolio</a></li>
+          <li class="nav-item"><a href="../booking.html" class="nav-link">Book Event</a></li>
           <li class="nav-item"><a href="#consultation" class="nav-link">Consultation</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-primary open-booking-btn">BOOK A SESSION &rarr;</button>
+        <a href="../booking.html" class="btn btn-primary">BOOK EVENT &rarr;</a>
         <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -233,7 +271,7 @@
           <!-- SERVICE 1: Photography -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/professional-photography-service.webp" alt="Studio Photography">
+              <img src="images/services/professional-photography-service.webp" alt="Studio Photography" style="object-position: center 15%;">
               <span class="catalog-card-badge">01 • STUDIO &amp; FINE ART</span>
             </div>
             <div class="catalog-card-body">
@@ -255,8 +293,11 @@
           <!-- SERVICE 2: Videography -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/cinematic-videography-service.webp" alt="Cinematic Videography">
-              <span class="catalog-card-badge">02 • CINEMA REELS</span>
+              <video class="catalog-card-video" autoplay muted loop playsinline preload="metadata" poster="images/services/cinematic-videography-service.webp" title="10-Second South Indian Wedding Video Clip" style="object-position: center center;">
+                <source src="videos/Couple_during_wedding_ceremony_20260925124336.mp4" type="video/mp4">
+                <source src="videos/wedding-videography-preview.mp4#t=0,10" type="video/mp4">
+              </video>
+              <span class="catalog-card-badge">02 • 10s WEDDING CLIP</span>
             </div>
             <div class="catalog-card-body">
               <div>
@@ -277,7 +318,7 @@
           <!-- SERVICE 3: Candid Photography -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/candid-wedding-photography.webp" alt="Candid Photography">
+              <img src="images/services/candid-wedding-photography.webp" alt="Candid Photography" style="object-position: center 20%;">
               <span class="catalog-card-badge">03 • DOCUMENTARY</span>
             </div>
             <div class="catalog-card-body">
@@ -299,7 +340,7 @@
           <!-- SERVICE 4: Model Photography -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/professional-model-photoshoot.webp" alt="Model Photography">
+              <img src="images/services/professional-model-photoshoot.webp" alt="Model Photography" style="object-position: center 14%;">
               <span class="catalog-card-badge">04 • HAUTE COUTURE</span>
             </div>
             <div class="catalog-card-body">
@@ -321,7 +362,7 @@
           <!-- SERVICE 5: Private Events -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/luxury-private-event-photography.webp" alt="Private Events">
+              <img src="images/services/luxury-private-event-photography.webp" alt="Private Events" style="object-position: center 18%;">
               <span class="catalog-card-badge">05 • VIP GALAS</span>
             </div>
             <div class="catalog-card-body">
@@ -343,7 +384,7 @@
           <!-- SERVICE 6: Marriage Events -->
           <article class="catalog-card">
             <div class="catalog-card-image">
-              <img src="images/services/indian-wedding-photograph.webp" alt="Marriage Events">
+              <img src="images/services/indian-wedding-photograph.webp" alt="Marriage Events" style="object-position: center 20%;">
               <span class="catalog-card-badge">06 • ROYAL WEDDINGS</span>
             </div>
             <div class="catalog-card-body">
@@ -408,15 +449,16 @@
           <ul class="footer-links">
             <li><a href="index.html">All Services</a></li>
             <li><a href="#catalog">Portfolio</a></li>
+            <li><a href="../booking.html">Book Event &amp; Schedule</a></li>
             <li><a href="#consultation">Consultation</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Studio Concierge</h4>
           <p style="font-size: 0.9rem; line-height: 1.8;">
-            concierge@eldhruvvisuals.com<br>
-            +91 98765 43210<br>
-            Atelier Suite 402, Signature Towers
+            eldhruvvisualsinfo@gmail.com<br>
+            +91 7397172114<br>
+            Salem, Tamil Nadu
           </p>
         </div>
       </div>
@@ -441,6 +483,10 @@
         <div class="form-group">
           <label for="modal-email">Email Address</label>
           <input type="email" id="modal-email" required placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label for="modal-phone">Phone Number</label>
+          <input type="tel" id="modal-phone" required placeholder="+91 73971 72114">
         </div>
         <div class="form-group">
           <label for="modal-service-select">Select Service</label>

@@ -353,10 +353,12 @@ div[tabindex="0"]:focus-visible {
 }
 
 .site-header.scrolled .brand-logo-img {
-  width: 58px;
-  height: 58px;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22), 0 0 10px rgba(201, 161, 91, 0.28);
+  width: auto;
+  height: 52px;
+  max-width: 120px;
+  object-fit: contain !important;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .site-header.scrolled .nav-link {
@@ -402,80 +404,73 @@ div[tabindex="0"]:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
 }
 
-/* Outer 3D Gold Orbit Aura */
+/* Outer 3D Gold Orbit Aura - disabled for clean borderless logo */
 .logo-3d-glow-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 22px;
-  background: conic-gradient(
-    from 0deg, 
-    transparent 0%, 
-    rgba(13, 62, 66, 0.75) 25%, 
-    transparent 50%, 
-    rgba(204, 165, 102, 0.95) 75%, 
-    transparent 100%
-  );
-  filter: blur(8px);
-  animation: logoRingRotate 4.5s linear infinite, logoAuraPulse 3s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 1;
+  display: none !important;
 }
 
-/* 3D Floating Card Container */
+/* 3D Floating Card Container - Fully Borderless and Uncropped */
 .logo-3d-card {
   position: relative;
   z-index: 2;
-  border-radius: 18px;
+  border-radius: 0 !important;
   transform-style: preserve-3d;
   animation: logo3dFloating 5s ease-in-out infinite;
-  box-shadow: 0 16px 36px -6px rgba(4, 20, 22, 0.65), 0 0 28px rgba(204, 165, 102, 0.4);
-  border: 2px solid rgba(204, 165, 102, 0.75);
-  overflow: hidden;
-  background: #FFFFFF;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  overflow: visible !important;
+  background: transparent !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+  will-change: transform, filter;
 }
 
 .brand-logo:hover .logo-3d-card,
 .footer-logo:hover .logo-3d-card {
-  border-color: var(--sand-gold);
-  box-shadow: 0 22px 50px -6px rgba(4, 20, 22, 0.8), 0 0 38px rgba(204, 165, 102, 0.6);
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.brand-logo:hover .logo-3d-glow-ring,
-.footer-logo:hover .logo-3d-glow-ring {
-  filter: blur(12px);
-  opacity: 1;
-}
-
-/* Logo Image Inside 3D Depth Layer */
+/* Logo Image Inside 3D Depth Layer - FULL UNCLIPPED 100% VISIBLE LOGO */
 .brand-logo-img {
   display: block;
-  width: 78px;
-  height: 78px;
-  object-fit: cover;
-  transform: translateZ(12px);
-  transition: transform 0.4s ease;
+  width: auto;
+  height: 68px;
+  max-width: 145px;
+  object-fit: contain !important;
+  transform: translateZ(14px);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .footer-logo-img {
   display: block;
-  width: 115px;
-  height: 115px;
-  object-fit: cover;
-  transform: translateZ(15px);
-  transition: transform 0.4s ease;
+  width: auto;
+  height: 98px;
+  max-width: 200px;
+  object-fit: contain !important;
+  transform: translateZ(16px);
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.45));
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .footer-logo-stage .logo-3d-card {
-  border-radius: 22px;
-  border-width: 2.5px;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
 }
 
 .footer-logo-stage .logo-3d-glow-ring {
-  border-radius: 24px;
+  display: none !important;
 }
 
 /* Holographic 3D Light Shimmer */
@@ -515,23 +510,23 @@ div[tabindex="0"]:focus-visible {
 @keyframes logo3dFloating {
   0% {
     transform: perspective(800px) rotateY(-9deg) rotateX(5deg) translateY(0px) translateZ(0);
-    box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.75), 0 0 20px rgba(201, 161, 91, 0.3);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
   }
   25% {
     transform: perspective(800px) rotateY(0deg) rotateX(-4deg) translateY(-4px) translateZ(10px);
-    box-shadow: 0 20px 38px -6px rgba(0, 0, 0, 0.8), 0 0 28px rgba(201, 161, 91, 0.45);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
   }
   50% {
     transform: perspective(800px) rotateY(10deg) rotateX(4deg) translateY(-8px) translateZ(18px);
-    box-shadow: 0 26px 48px -8px rgba(0, 0, 0, 0.88), 0 0 38px rgba(201, 161, 91, 0.6);
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(204, 165, 102, 0.4));
   }
   75% {
     transform: perspective(800px) rotateY(0deg) rotateX(6deg) translateY(-3px) translateZ(8px);
-    box-shadow: 0 18px 34px -5px rgba(0, 0, 0, 0.78), 0 0 25px rgba(201, 161, 91, 0.4);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
   }
   100% {
     transform: perspective(800px) rotateY(-9deg) rotateX(5deg) translateY(0px) translateZ(0);
-    box-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.75), 0 0 20px rgba(201, 161, 91, 0.3);
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
   }
 }
 
@@ -3209,23 +3204,29 @@ div[tabindex="0"]:focus-visible {
 
 @media screen and (max-width: 767px) {
   .logo-3d-stage {
-    padding: 3px;
+    padding: 0 !important;
+    overflow: visible !important;
   }
 
   .logo-3d-card {
-    border-radius: 13px;
+    border-radius: 0 !important;
+    overflow: visible !important;
   }
 
   .brand-logo-img {
-    width: 58px;
-    height: 58px;
-    border-radius: 12px;
+    width: auto;
+    height: 52px;
+    max-width: 115px;
+    object-fit: contain !important;
+    border-radius: 0;
   }
 
   .footer-logo-img {
-    width: 86px;
-    height: 86px;
-    border-radius: 16px;
+    width: auto;
+    height: 76px;
+    max-width: 155px;
+    object-fit: contain !important;
+    border-radius: 0;
   }
 
   .hero-section {
@@ -3454,4 +3455,190 @@ div[tabindex="0"]:focus-visible {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+
+/* Outer layer / ring explicitly disabled - no box or outer layer */
+.logo-3d-glow-ring {
+  display: none !important;
+}
+
+/* 3D Floating Logo Element - Completely Borderless and Transparent & Full Uncut */
+.logo-3d-card,
+.footer-logo-stage .logo-3d-card {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+}
+
+.brand-logo-img,
+.footer-logo-img {
+  object-fit: contain !important;
+  border-radius: 0 !important;
+}
+
+/* Hide box shimmer and glare overlays so no rectangular box is created */
+.logo-3d-shimmer,
+.logo-3d-glare {
+  display: none !important;
+}
+
+/* ==========================================================================
+   INTERACTIVE CAMERA CLICK PHOTO ANIMATION STYLES
+   ========================================================================== */
+
+/* Shutter press & recoil mechanical snap on the 3D logo */
+.logo-3d-card.camera-shutter-snap {
+  animation: cameraShutterSnap 0.52s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
+}
+
+@keyframes cameraShutterSnap {
+  0% {
+    transform: perspective(850px) scale(1) translateZ(0) rotateX(0deg) rotateY(0deg);
+    filter: brightness(1) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
+  }
+  20% {
+    transform: perspective(850px) scale(0.86) translateZ(-35px) rotateX(5deg);
+    filter: brightness(1.3) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+  }
+  35% {
+    transform: perspective(850px) scale(1.18) translateZ(45px) rotateX(-3deg);
+    filter: brightness(2.9) contrast(1.15) drop-shadow(0 0 35px #FFFFFF) drop-shadow(0 0 60px #CCA566);
+  }
+  60% {
+    transform: perspective(850px) scale(1.05) translateZ(16px) rotateX(0deg);
+    filter: brightness(1.25) drop-shadow(0 12px 24px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(204, 165, 102, 0.6));
+  }
+  100% {
+    transform: perspective(850px) scale(1) translateZ(0) rotateX(0deg) rotateY(0deg);
+    filter: brightness(1) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.7));
+  }
+}
+
+/* Fullscreen Ambient Camera Flash Strobe */
+.camera-flash-strobe {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--flash-x, 50%) var(--flash-y, 50%), 
+    rgba(255, 255, 255, 0.98) 0%, 
+    rgba(255, 248, 235, 0.9) 25%, 
+    rgba(204, 165, 102, 0.5) 55%, 
+    rgba(13, 62, 66, 0.15) 85%
+  );
+  transition: opacity 0.04s ease-out;
+}
+
+.camera-flash-strobe.flash-active {
+  animation: cameraFlashBurst 0.44s cubic-bezier(0.1, 0.85, 0.25, 1) forwards;
+}
+
+@keyframes cameraFlashBurst {
+  0% { opacity: 0; }
+  12% { opacity: 1; }
+  35% { opacity: 0.65; }
+  100% { opacity: 0; }
+}
+
+/* Concentric Lens Optical Shockwave Ring */
+.camera-lens-shockwave {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999998;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 25px rgba(204, 165, 102, 0.85), inset 0 0 20px rgba(255, 255, 255, 0.8);
+  transform: translate(-50%, -50%) scale(0.15);
+  animation: shockwaveExpand 0.65s cubic-bezier(0.12, 0.78, 0.35, 1) forwards;
+}
+
+@keyframes shockwaveExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.15);
+    opacity: 1;
+    border-width: 4px;
+  }
+  60% {
+    opacity: 0.85;
+    border-width: 2px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+/* Floating Instant Photo Ejected in 3D */
+.camera-instant-photo {
+  position: fixed;
+  z-index: 999997;
+  pointer-events: none;
+  width: 125px;
+  padding: 8px 8px 16px 8px;
+  background: #140E10;
+  border: 1.5px solid #CCA566;
+  border-radius: 8px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), 0 0 25px rgba(204, 165, 102, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: center center;
+  animation: instantPhotoEject 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.camera-instant-photo-img {
+  width: 100%;
+  height: 85px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid rgba(204, 165, 102, 0.3);
+  display: block;
+}
+
+.camera-instant-photo-badge {
+  font-family: var(--font-sans, 'Montserrat', sans-serif);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #CCA566;
+  margin-top: 6px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.camera-instant-photo-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 0 8px #25D366;
+}
+
+@keyframes instantPhotoEject {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) rotate(var(--photo-rot, -6deg)) translateZ(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(var(--photo-rot, -6deg)) translateZ(40px);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(-50%, calc(-50% + var(--photo-drift-y, 110px))) scale(1) rotate(var(--photo-rot, -6deg)) translateZ(20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, calc(-50% + var(--photo-drift-y, 110px) + 60px)) scale(0.85) rotate(calc(var(--photo-rot, -6deg) * 1.5)) translateZ(0);
+    opacity: 0;
+  }
 }
