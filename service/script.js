@@ -227,38 +227,36 @@ document.addEventListener('DOMContentLoaded', () => {
       photoIndex++;
 
       photoCard.innerHTML = `
-          <button class="modal-close-btn close-modal-btn" aria-label="Close modal">&times;</button>
-          <div style="text-align: center; padding: 15px 5px;">
-            <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #0D3E42, #08282B); border: 2px solid #CCA566; color: #CCA566; display: flex; align-items: center; justify-content: center; font-size: 1.9rem; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 6px 22px rgba(13, 62, 66, 0.35);">✓</div>
-            <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.95rem; color: #0A1C1E; margin-bottom: 8px;">Event Booking Recorded!</h3>
-            <p style="color: #3A4E50; font-family: 'Montserrat', sans-serif; font-size: 0.92rem; margin-bottom: 20px; line-height: 1.6;">
-              Your event booking is registered and immediately visible in the <strong>Studio Booking Dashboard</strong>.
-            </p>
-            <div style="background: #F7F4EE; border: 1px solid rgba(204, 165, 102, 0.35); border-radius: 14px; padding: 16px 20px; text-align: left; margin-bottom: 24px; font-family: 'Montserrat', sans-serif; font-size: 0.88rem; line-height: 1.8; box-shadow: 0 6px 20px rgba(8, 38, 41, 0.06);">
-              <div style="display:flex; justify-content:space-between;"><span style="color:#5C7274;">Booking ID:</span> <strong style="color:#CCA566;">${bookingId}</strong></div>
-              <div style="display:flex; justify-content:space-between;"><span style="color:#5C7274;">What Event:</span> <strong style="color:#0A1C1E;">${eventType}</strong></div>
-              <div style="display:flex; justify-content:space-between;"><span style="color:#5C7274;">Which Date:</span> <strong style="color:#0A1C1E;">${date}</strong></div>
-              <div style="display:flex; justify-content:space-between;"><span style="color:#5C7274;">Customer:</span> <strong style="color:#0A1C1E;">${name} (${phone})</strong></div>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <a href="https://wa.me/${STUDIO_PHONE}?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:#25D366; border-color:#25D366; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; font-size: 0.85rem;">
-                💬 Send Confirmation to WhatsApp
-              </a>
-              <a href="../booking.html#dashboard" class="btn btn-outline" style="text-decoration:none; display:flex; align-items:center; justify-content:center; font-size: 0.85rem;">
-                📋 Open Booking Dashboard &rarr;
-              </a>
-            </div>
-          </div>
-        `;
+        <img src="${photoSrc}" alt="Captured Photo" class="camera-instant-photo-img">
+        <div class="camera-instant-photo-badge">
+          <span>PHOTO #${clickCount}</span>
+        </div>
+      `;
+      document.body.appendChild(photoCard);
+      setTimeout(() => photoCard.remove(), 1600);
+    }
 
-        modalCard.querySelector('.close-modal-btn')?.addEventListener('click', () => {
-          modal?.classList.remove('active');
-          document.body.style.overflow = '';
-          window.location.reload();
-        });
-      }
+    brandLogos.forEach(logoElem => {
+      if (logoElem.dataset.cameraBound) return;
+      logoElem.dataset.cameraBound = 'true';
+      logoElem.style.cursor = 'pointer';
+      logoElem.setAttribute('title', 'Touch with cursor to snap a photo! 📸');
+
+      logoElem.addEventListener('mouseenter', () => {
+        triggerCameraPhotoClick(logoElem);
+      });
+
+      logoElem.addEventListener('touchstart', (e) => {
+        triggerCameraPhotoClick(logoElem);
+      }, { passive: true });
+
+      logoElem.addEventListener('click', (e) => {
+        triggerCameraPhotoClick(logoElem);
+      });
     });
   }
+
+  initCameraClickPhotoAnimation();
 
   // 6. Videography sound toggle
   const videoSoundBtn = document.getElementById('video-sound-btn');

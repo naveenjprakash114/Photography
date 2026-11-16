@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+let PORT = parseInt(process.env.PORT, 10) || 8080;
 const HOST = '0.0.0.0';
 
 const mimeTypes = {
@@ -46,8 +46,19 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(filePath).pipe(res);
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`EL Dhruv Visuals server running at:`);
-  console.log(`- Local:   http://localhost:${PORT}/`);
-  console.log(`- Network: http://127.0.0.1:${PORT}/`);
-});
+function startServer(portToTry) {
+  server.listen(portToTry, HOST, () => {
+    console.log(`EL Dhruv Visuals server running at:`);
+    console.log(`- Local:   http://localhost:${portToTry}/`);
+    console.log(`- Network: http://127.0.0.1:${portToTry}/`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${portToTry} is in use, trying port ${portToTry + 1}...`);
+      startServer(portToTry + 1);
+    } else {
+      console.error(err);
+    }
+  });
+}
+
+startServer(PORT);
