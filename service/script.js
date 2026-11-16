@@ -19,9 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const navMenu = document.getElementById('nav-menu');
   if (hamburgerBtn && navMenu) {
     hamburgerBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
-      hamburgerBtn.setAttribute('aria-expanded', (!expanded).toString());
+      const isOpen = navMenu.classList.toggle('is-open');
+      navMenu.classList.toggle('open', isOpen);
+      hamburgerBtn.classList.toggle('active', isOpen);
+      hamburgerBtn.classList.toggle('open', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
   }
 
